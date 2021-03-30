@@ -12,8 +12,12 @@ public class Asset {
 	String manufacturer, model, description, serialNumber;
 	Date purchaseDate;
 	
+	public Asset() {}
+	
 	public JSONArray listAssets() {
 		MSSQLConnection mssqlConnection = new MSSQLConnection();
+		
+		
 		
 		String sqlString = "SELECT * " +
 		"FROM " + mssqlConnection.getDatabase()+".dbo.assets WITH (NOLOCK) " +

@@ -2,12 +2,14 @@ package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class Users {
+public class User {
 	int userID;
 	String firstName;
 	String lastName;
@@ -15,13 +17,75 @@ public class Users {
 	String phoneNumber;
 	int status, role;
 
-	public Users() {}
+	public User() {}
 	
 	public JSONArray listUsers() {
+		JSONObject jsonObj = null;
+		JSONArray arr = new JSONArray();
+		
+		try {
+		MSSQLConnection mssqlConnection = new MSSQLConnection();
+		Connection c = mssqlConnection.getConnection();
+
+		Statement stmt = c.createStatement(
+				java.sql.ResultSet.TYPE_SCROLL_INSENSITIVE, java.sql.ResultSet.CONCUR_READ_ONLY);
+		
+		String sqlString = "SELECT * " +
+				"FROM " + mssqlConnection.getDatabase()+".dbo.users WITH (NOLOCK)";		
+		
+		java.sql.ResultSet results = stmt.executeQuery(sqlString);
+		
+		while(results.next()) {
+			
+			jsonObj = new JSONObject();
+			
+			int userID = results.getInt("userID");
+			String firstName = results.getString("firstName").trim();
+			String lastName = results.getString("firstName").trim();
+			String email = results.getString("email").trim();
+			String phoneNumber = results.getString("phoneNumber").trim();
+			int status = results.getInt("status");
+			int role = results.getInt("role");
+			
+			jsonObj.put("userID", userID);
+			jsonObj.put("firstName", firstName);
+			jsonObj.put("lastName", lastName);
+			jsonObj.put("email", email);
+			jsonObj.put("phoneNumber", phoneNumber);
+			jsonObj.put("status", status);
+			jsonObj.put("role", role);
+			
+			arr.put(jsonObj);
+
+
+		}
+				
+		SQLQuery sqlQuery = new SQLQuery(); 
+		sqlQuery.setSqlString(sqlString);
+		
+		System.out.println(arr);
+	    
+		//Close Connections
+		try { if (results != null) results.close(); } catch (Exception e) {}; 
+    	try { if (stmt!= null) stmt.close(); } catch (Exception e) {};
+    	try { if (c != null) c.close(); } catch (Exception e) {}; 
+	
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return arr;
+	}
+	
+	public JSONArray listUsersByRole() {
 		MSSQLConnection mssqlConnection = new MSSQLConnection();
 		
 		String sqlString = "SELECT * " +
-		"FROM " + mssqlConnection.getDatabase()+".dbo.users WITH (NOLOCK)";			
+		"FROM " + mssqlConnection.getDatabase()+".dbo.users WITH (NOLOCK) WHERE role="+role+"";			
 		
 		SQLQuery sqlQuery = new SQLQuery(); 
 		sqlQuery.setSqlString(sqlString);
@@ -82,6 +146,7 @@ public class Users {
 	
 	}
 	
+
 	public String addUser() {
 		
 		String message = "User Added!";
@@ -162,5 +227,22 @@ public class Users {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+	
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public int getRole() {
+		return role;
+	}
+
+	public void setRole(int role) {
+		this.role = role;
+	}
+
 	
 }
