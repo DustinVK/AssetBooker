@@ -39,7 +39,7 @@ public class UsersAPI {
 	}
 	
 	@GET
-	@Path("/listByRole/{id}/") 
+	@Path("/role/{id}/") 
 	@Produces("application/json")
 	@Consumes("application/json")
 	public String listUsersByRole(@PathParam("id") Integer id) {

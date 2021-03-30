@@ -14,11 +14,24 @@ public class Asset {
 	
 	public Asset() {}
 	
+	public JSONArray displayAssets() {
+		MSSQLConnection mssqlConnection = new MSSQLConnection();
+	
+		String sqlString = "SELECT a.assetTag, s.title, a.manufacturer, a.model, a.description " +
+		"FROM " + mssqlConnection.getDatabase()+".dbo.assets AS a WITH (NOLOCK) " +
+		"LEFT JOIN " + mssqlConnection.getDatabase()+ ".dbo.AssetStatus AS s WITH (NOLOCK) " +
+		"ON a.status = s.status " +
+		"ORDER BY a.model";			
+		
+		SQLQuery sqlQuery = new SQLQuery(); 
+		sqlQuery.setSqlString(sqlString);
+		
+		return sqlQuery.lstQuery();
+	}
+	
 	public JSONArray listAssets() {
 		MSSQLConnection mssqlConnection = new MSSQLConnection();
-		
-		
-		
+	
 		String sqlString = "SELECT * " +
 		"FROM " + mssqlConnection.getDatabase()+".dbo.assets WITH (NOLOCK) " +
 		"ORDER BY assetTag";			
@@ -44,7 +57,7 @@ public class Asset {
 
 	}
 	
-public String updateAsset() {
+	public String updateAsset() {
 		
 		String message = "Asset Updated!";
 		
