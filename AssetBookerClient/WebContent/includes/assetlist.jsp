@@ -1,13 +1,13 @@
-<h1 class="page-header">Inventory</h1>
+<h1 class="page-header">Inventory List</h1>
  
 <table class = "table table-hover">
     <thead id="postBody">
     <tr>
-        <th>Asset Tag</th>
         <th>Status</th>
         <th>Manufacturer</th>
         <th>Model</th>
         <th>Description</th>
+        <th></th>
     </tr>
     </thead>
 </table>

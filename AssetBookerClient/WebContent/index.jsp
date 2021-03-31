@@ -22,8 +22,10 @@
 
 	if(view.equals("assets")){%>
 		<%@include file=".\includes\assetlist.jsp"%>
-	<%}else if(view.equals("article")){ %>
-		<%@include file=".\includes\dashboard.jsp"%>
+	<%}else if(view.equals("reserve")){ %>
+		<%@include file=".\includes\reserve.jsp" %>
+		
+		<%@include file=".\includes\calendar.jsp"%>
 	<%}else if(view.equals("categorylist")){ %>
 		<%@include file=".\includes\dashboard.jsp"%>
 	<%}else{%>
@@ -42,6 +44,10 @@
   
   <!--  Custom scripts -->
   <script src="javascript/scripts.js"></script>
+
+ 
+
+  
   
 
   <!-- Menu Toggle Script -->

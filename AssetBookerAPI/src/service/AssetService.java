@@ -1,6 +1,7 @@
 package service;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import model.Asset;
 import model.User;
@@ -25,6 +26,18 @@ public class AssetService {
 		
 		return assets;
 		
+	}
+	
+	public static JSONObject getAsset(int tag) {
+		
+		JSONObject assetJO = new JSONObject();
+		
+		Asset asset= new Asset();
+		asset.setAssetTag(tag);
+		
+		assetJO = asset.getAsset();
+		
+		return assetJO;
 	}
 	
 }

@@ -7,8 +7,14 @@ $(document).ready(function(){
 	}
 	
 	if(view == 'assets') {
-		//articleID = getQueryStringVariable('articleID');
+		
 		listAssets();
+		
+	} else if(view == 'reserve') {
+		tag = getQueryStringVariable('tag');
+		
+		reserveAsset(tag);
+		
 	} 
 
 });
@@ -42,7 +48,9 @@ function listAssets(){
 			}
     	*/	
     		var lstResults = "<tr>" +
-	            "<td>"+value.assetTag+"</td><td>"+value.title+"</td><td>"+value.manufacturer+"</td><td>"+value.model+"</td><td>"+value.description+"</td></tr>";
+	            "<td>"+value.title+"</td><td>"+value.manufacturer+"</td><td>"+value.model+"</td><td>"+value.description+"</td>" +
+	            "<td><a href='./index.jsp?view=reserve&tag=" + value.assetTag + "'>Make Reservation</a></td>" +
+	            "</tr>";
 
        		if($("#postBody").text()){
 				document.getElementById('postBody').innerHTML += lstResults;
@@ -51,3 +59,29 @@ function listAssets(){
     	});
 	});
 }
+
+function requestReservation() {
+
+}
+
+function reserveAsset(assetTag){
+		
+		$.ajax({
+			url: "../AssetBookerAPI/rest/assets/"+assetTag,
+			type: 'GET',
+			dataType : "json",
+	        contentType: "application/json",
+		}).fail(function(response) {
+			console.log(JSON.stringify(response));
+	
+	    }).done(function(response){
+	    	
+	    	$("#assetTag").val(assetTag);
+	    	$("#manufacturer").val(response.manufacturer);
+	    	$("#model").val(response.model);
+	    	$("#description").val(response.description);
+	
+
+		});
+	}
+	

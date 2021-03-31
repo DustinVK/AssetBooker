@@ -15,5 +15,22 @@
 
   <!-- Custom styles for this template -->
   <link href="css/simple-sidebar.css" rel="stylesheet">
+  
+  <link href="css/calendar.css" rel="stylesheet" media="screen">
+  
+   <link href='css/main.css' rel='stylesheet' />
+   <script src='javascript/main.js'></script>
+   <script>
+
+     document.addEventListener('DOMContentLoaded', function() {
+       var calendarEl = document.getElementById('calendar');
+       var calendar = new FullCalendar.Calendar(calendarEl, {
+         initialView: 'dayGridMonth'
+       });
+       calendar.render();
+     });
+
+   </script>
+
 
 </head>
