@@ -17,11 +17,13 @@ public class Asset {
 	public JSONArray displayAssets() {
 		MSSQLConnection mssqlConnection = new MSSQLConnection();
 	
-		String sqlString = "SELECT a.assetTag, s.title, a.manufacturer, a.model, a.description " +
-		"FROM " + mssqlConnection.getDatabase()+".dbo.assets AS a WITH (NOLOCK) " +
+		String sqlString = "SELECT * " +
+		"FROM " + mssqlConnection.getDatabase()+".dbo.Assets AS a WITH (NOLOCK) " +
 		"LEFT JOIN " + mssqlConnection.getDatabase()+ ".dbo.AssetStatus AS s WITH (NOLOCK) " +
-		"ON a.status = s.status " +
-		"ORDER BY a.model";			
+		"ON a.assetStatus = s.assetStatus "+
+		"LEFT JOIN " + mssqlConnection.getDatabase()+ ".dbo.AssetTypes AS t WITH (NOLOCK) " +
+		"ON a.assetType = t.assetType "+
+		"ORDER BY a.assetTag ";			
 		
 		SQLQuery sqlQuery = new SQLQuery(); 
 		sqlQuery.setSqlString(sqlString);
@@ -47,7 +49,11 @@ public class Asset {
 		MSSQLConnection mssqlConnection = new MSSQLConnection();
 
 		String sqlString = "SELECT * " +
-		"FROM " + mssqlConnection.getDatabase()+".dbo.assets WITH (NOLOCK) " +				
+		"FROM " + mssqlConnection.getDatabase()+".dbo.assets As a WITH (NOLOCK) " +
+		"LEFT JOIN " + mssqlConnection.getDatabase()+ ".dbo.AssetStatus AS s WITH (NOLOCK) " +
+		"ON a.assetStatus = s.assetStatus "+
+		"LEFT JOIN " + mssqlConnection.getDatabase()+ ".dbo.AssetTypes AS t WITH (NOLOCK) " +
+		"ON a.assetType = t.assetType "+
 		"WHERE assetTag= "+assetTag+""; 
 
 		SQLQuery sqlQuery = new SQLQuery(); 

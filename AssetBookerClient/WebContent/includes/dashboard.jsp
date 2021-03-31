@@ -1,2 +1,7 @@
-<h1 class="page-header">Welcome to TDMP Media Supply Checkout</h1>
- 
+ <div class="img-container">
+  <img src="./images/fsu_.jpg" alt="FSU" style="width:100%;">
+  <div class="centered-img-text"><h2 class="page-header">TDMP Media Supply Checkout</h2></div>
+</div> 
+
+
+

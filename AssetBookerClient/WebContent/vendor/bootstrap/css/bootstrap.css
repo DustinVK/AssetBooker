@@ -153,7 +153,7 @@ sup {
 }
 
 a {
-  color: #007bff;
+  color: #800000;
   text-decoration: none;
   background-color: transparent;
 }
@@ -2544,7 +2544,7 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: #007bff;
+  background-color: rgb(128, 0, 0);
   border-color: #007bff;
 }
 

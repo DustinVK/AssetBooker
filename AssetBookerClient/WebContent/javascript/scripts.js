@@ -48,8 +48,8 @@ function listAssets(){
 			}
     	*/	
     		var lstResults = "<tr>" +
-	            "<td>"+value.title+"</td><td>"+value.manufacturer+"</td><td>"+value.model+"</td><td>"+value.description+"</td>" +
-	            "<td><a href='./index.jsp?view=reserve&tag=" + value.assetTag + "'>Make Reservation</a></td>" +
+	            "<td>"+value.description+"</td><td>"+value.assetStatusName+"</td><td>"+value.assetTypeName+"</td>"+
+	            "<td><a href='./index.jsp?view=reserve&tag=" + value.assetTag + "'>Reserve</a></td>" +
 	            "</tr>";
 
        		if($("#postBody").text()){
@@ -77,10 +77,16 @@ function reserveAsset(assetTag){
 	    }).done(function(response){
 	    	
 	    	$("#assetTag").val(assetTag);
-	    	$("#manufacturer").val(response.manufacturer);
-	    	$("#model").val(response.model);
 	    	$("#description").val(response.description);
-	
+	    	$("#type").val(response.assetTypeName);
+	    	$("#notes").val(response.notes);
+			
+			var calendarLink = "<a class='calendar-link' href='./index.jsp?view=calendar&tag=" + assetTag + "'>Availability Calendar</a>";
+
+       		
+			document.getElementById('calendarBox').innerHTML += calendarLink;
+			
+			
 
 		});
 	}
