@@ -2,20 +2,51 @@ package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.Time;
 import java.sql.Date;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
-public class Reservation {
+public class Reservation implements DataObject {
 	int reservationID, userID, assetTag, status;
 	Date checkOut;
 	Date checkIn;
+	Time checkOutTime, checkInTime;
 	
-	public JSONArray listReservations() {
+	public JSONArray getAll() {
 		MSSQLConnection mssqlConnection = new MSSQLConnection();
 		
 		String sqlString = "SELECT * " +
 		"FROM " + mssqlConnection.getDatabase()+".dbo.reservations WITH (NOLOCK) " +
+		"ORDER BY reservationID";			
+		
+		SQLQuery sqlQuery = new SQLQuery(); 
+		sqlQuery.setSqlString(sqlString);
+		
+		return sqlQuery.lstQuery();
+	}
+	
+	public JSONArray getByStatus() {
+		MSSQLConnection mssqlConnection = new MSSQLConnection();
+		
+		String sqlString = "SELECT * " +
+		"FROM " + mssqlConnection.getDatabase()+".dbo.reservations WITH (NOLOCK) " +
+		"WHERE status ="+status+"" +
+		"ORDER BY reservationID";			
+		
+		SQLQuery sqlQuery = new SQLQuery(); 
+		sqlQuery.setSqlString(sqlString);
+		
+		return sqlQuery.lstQuery();
+	}
+	
+	public JSONArray getActive() {
+		MSSQLConnection mssqlConnection = new MSSQLConnection();
+		
+		String sqlString = "SELECT * " +
+		"FROM " + mssqlConnection.getDatabase()+".dbo.reservations WITH (NOLOCK) " +
+		"WHERE status > 0 " +
 		"ORDER BY reservationID";			
 		
 		SQLQuery sqlQuery = new SQLQuery(); 
@@ -49,21 +80,69 @@ public class Reservation {
 		
 		return sqlQuery.lstQuery();
 	}
+		
+	public String update() {
+			
+			String message = "Reservation Updated!";
+			
+			try {
+				MSSQLConnection mssqlConnection = new MSSQLConnection();
+				Connection connection = mssqlConnection.getConnection();
+				
+				String update = "UPDATE " + mssqlConnection.getDatabase()+".dbo.reservations SET " +
+						"status=IsNull(?,status) WHERE reservationID="+reservationID+"";
+				
+				PreparedStatement ps = connection.prepareStatement(update);
+				
+				ps.setInt(1, status);
+				ps.executeUpdate();
+				
+				
+		    	try { if (ps!= null) ps.close(); } catch (Exception e) {};
+		    	try { if (connection != null) connection.close(); } catch (Exception e) {}; 
+				
+			} catch (Exception e) {
+			    System.out.println(e.getMessage());
 	
-public String updateReservations() {
+			}
+			
+			return message;
+	
+		}
+	
+	public JSONObject get() {
+		MSSQLConnection mssqlConnection = new MSSQLConnection();
 		
-		String message = "Reservation Updated!";
+		String sqlString = "SELECT * " +
+				"FROM " + mssqlConnection.getDatabase()+".dbo.reservations WITH (NOLOCK) " +
+				"WHERE reservationID = " + reservationID + "";
 		
+		SQLQuery sqlQuery = new SQLQuery(); 
+		sqlQuery.setSqlString(sqlString);
+		
+		return sqlQuery.getQuery();
+	}
+	
+	public String add() {
+		
+	String message = "Reservation Added!";
+	
 		try {
 			MSSQLConnection mssqlConnection = new MSSQLConnection();
 			Connection connection = mssqlConnection.getConnection();
 			
-			String update = "UPDATE " + mssqlConnection.getDatabase()+".dbo.reservations SET " +
-					"status=IsNull(?,status) WHERE reservationID="+reservationID+"";
+			String addAsset = "INSERT " + mssqlConnection.getDatabase()+".dbo.reservations " +
+					"(userID, assetTag, status, checkOut, checkIn) VALUES (?,?,?,?,?)";
 			
-			PreparedStatement ps = connection.prepareStatement(update);
+			PreparedStatement ps = connection.prepareStatement(addAsset);
 			
-			ps.setInt(1, status);
+			
+			ps.setInt(1, userID);
+			ps.setInt(2, assetTag);
+			ps.setInt(3, status);
+			ps.setDate(4, checkOut);
+			ps.setDate(5, checkIn);
+			
 			ps.executeUpdate();
 			
 			
@@ -72,47 +151,67 @@ public String updateReservations() {
 			
 		} catch (Exception e) {
 		    System.out.println(e.getMessage());
-
+	
 		}
 		
 		return message;
-
-	}
-
-public String addReservation() {
-	
-String message = "Reservation Added!";
-
-	try {
-		MSSQLConnection mssqlConnection = new MSSQLConnection();
-		Connection connection = mssqlConnection.getConnection();
 		
-		String addAsset = "INSERT " + mssqlConnection.getDatabase()+".dbo.reservations " +
-				"(userID, assetTag, status, checkOut, checkIn) VALUES (?,?,?,?,?)";
-		
-		PreparedStatement ps = connection.prepareStatement(addAsset);
-		
-		
-		ps.setInt(1, userID);
-		ps.setInt(2, assetTag);
-		ps.setInt(3, status);
-		ps.setDate(4, checkOut);
-		ps.setDate(5, checkIn);
-		
-		ps.executeUpdate();
-		
-		
-    	try { if (ps!= null) ps.close(); } catch (Exception e) {};
-    	try { if (connection != null) connection.close(); } catch (Exception e) {}; 
-		
-	} catch (Exception e) {
-	    System.out.println(e.getMessage());
-
 	}
 	
-	return message;
+	public String delete() {
+		return null;
+	}
 	
-}
 	
+	public int getReservationID() {
+		return reservationID;
+	}
+
+	public void setReservationID(int reservationID) {
+		this.reservationID = reservationID;
+	}
+
+	public int getUserID() {
+		return userID;
+	}
+
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
+
+	public int getAssetTag() {
+		return assetTag;
+	}
+
+	public void setAssetTag(int assetTag) {
+		this.assetTag = assetTag;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public Date getCheckOut() {
+		return checkOut;
+	}
+
+	public void setCheckOut(Date checkOut) {
+		this.checkOut = checkOut;
+	}
+
+	public Date getCheckIn() {
+		return checkIn;
+	}
+
+	public void setCheckIn(Date checkIn) {
+		this.checkIn = checkIn;
+	}
+
+
+		
 	
 }

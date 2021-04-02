@@ -19,7 +19,7 @@ public class User {
 
 	public User() {}
 	
-	public JSONArray listUsers() {
+	public JSONArray getAll() {
 		JSONObject jsonObj = null;
 		JSONArray arr = new JSONArray();
 		
@@ -81,7 +81,7 @@ public class User {
 		return arr;
 	}
 	
-	public JSONArray listUsersByRole() {
+	public JSONArray getAllRole() {
 		MSSQLConnection mssqlConnection = new MSSQLConnection();
 		
 		String sqlString = "SELECT * " +
@@ -93,7 +93,7 @@ public class User {
 		return sqlQuery.lstQuery();
 	}
 	
-	public JSONObject getUser() {
+	public JSONObject get() {
 
 		MSSQLConnection mssqlConnection = new MSSQLConnection();
 
@@ -108,7 +108,7 @@ public class User {
 
 	}
 	
-	public String updateUser() {
+	public String update() {
 		
 		String message = "User Updated!";
 		
@@ -147,7 +147,7 @@ public class User {
 	}
 	
 
-	public String addUser() {
+	public String add() {
 		
 		String message = "User Added!";
 		

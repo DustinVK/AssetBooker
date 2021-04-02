@@ -7,14 +7,14 @@ import java.sql.Date;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class Asset {
+public class Asset implements DataObject {
 	int assetTag, status;
 	String manufacturer, model, description, serialNumber;
 	Date purchaseDate;
 	
 	public Asset() {}
 	
-	public JSONArray displayAssets() {
+	public JSONArray getActive() {
 		MSSQLConnection mssqlConnection = new MSSQLConnection();
 	
 		String sqlString = "SELECT * " +
@@ -31,7 +31,7 @@ public class Asset {
 		return sqlQuery.lstQuery();
 	}
 	
-	public JSONArray listAssets() {
+	public JSONArray getAll() {
 		MSSQLConnection mssqlConnection = new MSSQLConnection();
 	
 		String sqlString = "SELECT * " +
@@ -44,7 +44,7 @@ public class Asset {
 		return sqlQuery.lstQuery();
 	}
 	
-	public JSONObject getAsset() {
+	public JSONObject get() {
 
 		MSSQLConnection mssqlConnection = new MSSQLConnection();
 
@@ -63,7 +63,7 @@ public class Asset {
 
 	}
 	
-	public String updateAsset() {
+	public String update() {
 		
 		String message = "Asset Updated!";
 		
@@ -98,7 +98,7 @@ public class Asset {
 
 	}
 
-	public String addAsset() {
+	public String add() {
 	
 	String message = "Asset Added!";
 	

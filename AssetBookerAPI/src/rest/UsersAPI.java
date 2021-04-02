@@ -22,7 +22,7 @@ public class UsersAPI {
 	@Produces("application/json")
 	@Consumes("application/json")
 	public String listUsers() {
-		JSONArray articles = UserService.listUsers();
+		JSONArray articles = UserService.getAll();
 		
 		return articles.toString();
 	}
@@ -33,7 +33,7 @@ public class UsersAPI {
 	@Consumes("application/json")
 	public String getUser(@PathParam("id") Integer id) {
 		
-		JSONObject user = UserService.getUser(id);
+		JSONObject user = UserService.get(id);
 		return user.toString();
 		
 	}
@@ -54,7 +54,7 @@ public class UsersAPI {
 	@Consumes("application/json")
 	public String updateArticle(String inputParms) {
 		try {
-			JSONObject result = UserService.updateUser(new JSONObject(inputParms));
+			JSONObject result = UserService.update(new JSONObject(inputParms));
 			return result.toString();
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -72,7 +72,7 @@ public class UsersAPI {
 	public String addUser(String inputParms) {
 
 		try {
-			JSONObject result = UserService.addUser(new JSONObject(inputParms));
+			JSONObject result = UserService.add(new JSONObject(inputParms));
 			return result.toString();
 			
 		} catch (JSONException e) {

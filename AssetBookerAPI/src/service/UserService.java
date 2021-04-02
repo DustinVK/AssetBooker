@@ -8,11 +8,11 @@ import model.User;
 
 public class UserService {
 	
-	public static JSONArray listUsers() {
+	public static JSONArray getAll() {
 		JSONArray users = new JSONArray();
 		
 		User user = new User();
-		users = user.listUsers();
+		users = user.getAll();
 		
 		return users;
 		
@@ -23,25 +23,25 @@ public class UserService {
 		
 		User user = new User();
 		user.setRole(role);
-		users = user.listUsersByRole();
+		users = user.getAllRole();
 		
 		return users;
 		
 	}
 	
-	public static JSONObject getUser(int id) {
+	public static JSONObject get(int id) {
 		
 		JSONObject userObj = new JSONObject();
 		
 		User user = new User();
 		user.setUserID(id);
 		
-		userObj = user.getUser();
+		userObj = user.get();
 		
 		return userObj;
 	}
 	
-	public static JSONObject updateUser(JSONObject inputParms) {
+	public static JSONObject update(JSONObject inputParms) {
 		String message = "";
 		
 		JSONObject result = new JSONObject();
@@ -66,7 +66,7 @@ public class UserService {
 			user.setRole(role);
 			
 		
-			message = user.updateUser();
+			message = user.update();
 		
 			result.put("message", message);
 			
@@ -78,7 +78,7 @@ public class UserService {
 		return result;
 	}
 	
-	public static JSONObject addUser(JSONObject inputParms) {
+	public static JSONObject add(JSONObject inputParms) {
 		String message = "";
 		
 		JSONObject result = new JSONObject();
@@ -101,7 +101,7 @@ public class UserService {
 			user.setRole(role);
 			
 		
-			message = user.addUser();
+			message = user.add();
 		
 			result.put("message", message);
 			

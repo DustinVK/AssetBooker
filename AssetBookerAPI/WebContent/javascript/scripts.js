@@ -64,6 +64,36 @@ function requestReservation() {
 
 }
 
+function printReservation(){
+
+	var assetTag = $("#assetTag").val();
+	var userID = 1;
+	var outDate = $("#outDate").val();
+	var outTime = $("#outTime").val();
+	var inDate = $("#inDate").val();
+	var inTime = $("#outTime").val();
+	
+	console.log("testii");
+	
+	var parms = { assetTag:assetTag, userID:userID, outDate:outDate, outTime:outTime, inDate:inDate, inTime:inTime};
+	
+	console.log(parms.outDate);
+	
+	$.ajax({
+		url: "./rest/reservations/",
+		type: 'POST',
+		dataType : "json",
+        contentType: "application/json",
+		data: JSON.stringify(parms)
+	}).fail(function(response) {
+		console.log(JSON.stringify(response));
+
+    }).done(function(response){
+		alert(response.message);
+	});
+}
+
+
 function reserveAsset(assetTag){
 		
 		$.ajax({

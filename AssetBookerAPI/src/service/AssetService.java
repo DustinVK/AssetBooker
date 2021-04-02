@@ -8,34 +8,34 @@ import model.User;
 
 public class AssetService {
 
-	public static JSONArray listAssets() {
+	public static JSONArray getAll() {
 		JSONArray assets = new JSONArray();
 		
 		Asset asset = new Asset();
-		assets = asset.listAssets();
+		assets = asset.getAll();
 		
 		return assets;
 		
 	}
 	
-	public static JSONArray displayAssets() {
+	public static JSONArray getActive() {
 		JSONArray assets = new JSONArray();
 		
 		Asset asset = new Asset();
-		assets = asset.displayAssets();
+		assets = asset.getActive();
 		
 		return assets;
 		
 	}
 	
-	public static JSONObject getAsset(int tag) {
+	public static JSONObject get(int tag) {
 		
 		JSONObject assetJO = new JSONObject();
 		
 		Asset asset= new Asset();
 		asset.setAssetTag(tag);
 		
-		assetJO = asset.getAsset();
+		assetJO = asset.get();
 		
 		return assetJO;
 	}

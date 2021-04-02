@@ -18,8 +18,8 @@ public class AssetsAPI {
 	//@Path("/list/")
 	@Produces("application/json")
 	@Consumes("application/json")
-	public String listAssets() {
-		JSONArray assets = AssetService.displayAssets();
+	public String getActive() {
+		JSONArray assets = AssetService.getActive();
 		
 		return assets.toString();
 	}
@@ -28,8 +28,8 @@ public class AssetsAPI {
 	@Path("/{tag}/") 
 	@Produces("application/json")
 	@Consumes("application/json")
-	public String getAsset(@PathParam("tag") Integer tag) {
-		JSONObject asset = AssetService.getAsset(tag);
+	public String get(@PathParam("tag") Integer tag) {
+		JSONObject asset = AssetService.get(tag);
 		
 		return asset.toString();
 	}
