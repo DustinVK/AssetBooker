@@ -13,7 +13,16 @@ public class Reservation implements DataObject {
 	Date checkOut;
 	Date checkIn;
 	Time checkOutTime, checkInTime;
+	String checkOutDateTime;
 	
+	public String getCheckOutDateTime() {
+		return checkOutDateTime;
+	}
+
+	public void setCheckOutDateTime(String checkOutDateTime) {
+		this.checkOutDateTime = checkOutDateTime;
+	}
+
 	public JSONArray getAll() {
 		MSSQLConnection mssqlConnection = new MSSQLConnection();
 		
@@ -132,7 +141,7 @@ public class Reservation implements DataObject {
 			Connection connection = mssqlConnection.getConnection();
 			
 			String addAsset = "INSERT " + mssqlConnection.getDatabase()+".dbo.reservations " +
-					"(userID, assetTag, status, checkOut, checkIn) VALUES (?,?,?,?,?)";
+					"(userID, assetTag, status, checkOut) VALUES (?,?,?,?)";
 			
 			PreparedStatement ps = connection.prepareStatement(addAsset);
 			
@@ -140,9 +149,8 @@ public class Reservation implements DataObject {
 			ps.setInt(1, userID);
 			ps.setInt(2, assetTag);
 			ps.setInt(3, status);
-			ps.setDate(4, checkOut);
-			ps.setDate(5, checkIn);
-			
+			ps.setString(4, checkOutDateTime);
+
 			ps.executeUpdate();
 			
 			

@@ -1,4 +1,7 @@
 $(document).ready(function(){
+
+
+
 	
 	view = getQueryStringVariable('view');
 	
@@ -13,7 +16,21 @@ $(document).ready(function(){
 	} else if(view == 'reserve') {
 		tag = getQueryStringVariable('tag');
 		
-		reserveAsset(tag);
+	    $('#datePicker').datepicker({
+	        startDate: "yesterday",
+	        daysOfWeekDisabled: "0,6",
+	        daysOfWeekHighlighted: "1,2,3,4,5",
+	        todayHighlight: true,
+	        //datesDisabled: ['04/06/2021', '04/21/2021'],
+	        defaultViewDate: { year: 1977, month: 04, day: 25 }
+   		 });
+   		 
+   		 $('#datePicker').datepicker().on('changeDate', function (ev) {
+    		$('#outDate').val(ev.format());
+		});
+		
+
+		showReservationForm(tag);
 		
 	} 
 
@@ -60,24 +77,20 @@ function listAssets(){
 	});
 }
 
-function requestReservation() {
 
-}
-
-function printReservation(){
+function requestReservation(){
 
 	var assetTag = $("#assetTag").val();
 	var userID = 1;
 	var outDate = $("#outDate").val();
 	var outTime = $("#outTime").val();
-	var inDate = $("#inDate").val();
-	var inTime = $("#outTime").val();
-	
+	var checkOut = outDate + " " + outTime;
+
 	console.log("testii");
 	
-	var parms = { assetTag:assetTag, userID:userID, outDate:outDate, outTime:outTime, inDate:inDate, inTime:inTime};
+	var parms = { assetTag:assetTag, userID:userID, checkOut:checkOut};
 	
-	console.log(parms.outDate);
+	console.log(parms.checkOut);
 	
 	$.ajax({
 		url: "./rest/reservations/",
@@ -94,7 +107,11 @@ function printReservation(){
 }
 
 
-function reserveAsset(assetTag){
+function showReservationForm(assetTag){
+
+		//document.getElementById('outDate');
+		
+
 		
 		$.ajax({
 			url: "../AssetBookerAPI/rest/assets/"+assetTag,
@@ -111,10 +128,12 @@ function reserveAsset(assetTag){
 	    	$("#type").val(response.assetTypeName);
 	    	$("#notes").val(response.notes);
 			
-			var calendarLink = "<a class='calendar-link' href='./index.jsp?view=calendar&tag=" + assetTag + "'>Availability Calendar</a>";
+			//var calendarLink = "<a class='calendar-link' href='./index.jsp?view=calendar&tag=" + assetTag + "'>Availability Calendar</a>";
 
        		
-			document.getElementById('calendarBox').innerHTML += calendarLink;
+			//document.getElementById('calendarBox').innerHTML += calendarLink;
+			
+			
 			
 			
 

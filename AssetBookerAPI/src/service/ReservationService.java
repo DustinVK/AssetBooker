@@ -63,16 +63,16 @@ public static JSONObject add(JSONObject inputParms) {
 			int userID = inputParms.getInt("userID");
 			int assetTag = inputParms.getInt("assetTag");
 			int status = 1;
-			long inDateTime = inputParms.getLong("inDateTime");
-			long outDateTime = inputParms.getLong("outDateTime");
-
+			String checkOutDateTime = inputParms.getString("checkOut");
 			
-			String articleTitle = inputParms.getString("articleTitle");
-			String articleContent= inputParms.getString("articleContent");
-			int articleAuthorID = inputParms.getInt("articleAuthorID");
-			int categoryID = inputParms.getInt("categoryID");
-			String articleImage = inputParms.getString("articleImage");
+			Reservation res = new Reservation();
+			res.setUserID(userID);
+			res.setAssetTag(assetTag);
+			res.setStatus(status);
+			res.setCheckOutDateTime(checkOutDateTime);
 			
+			message = res.add();
+			result.put("message", message);
 			//Date date = Date.valueOf(inDateTime);
 			
 //			Article article = new Article();

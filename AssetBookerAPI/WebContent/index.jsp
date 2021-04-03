@@ -24,8 +24,6 @@
 		<%@include file=".\includes\assetlist.jsp"%>
 	<%}else if(view.equals("reserve")){ %>
 		<%@include file=".\includes\reserve.jsp" %>
-	<%}else if(view.equals("calendar")){ %>
-		<%@include file=".\includes\calendar.jsp"%>
 	<%}else{%>
 	<%@include file=".\includes\dashboard.jsp" %>
 		<%}%>
@@ -42,8 +40,9 @@
   
   <!--  Custom scripts -->
   <script src="javascript/scripts.js"></script>
+  <script src="javascript/reserve.js"></script>
+  <script src="javascript/bootstrap-datepicker.js"></script>
 
- 
 
   
   
