@@ -8,7 +8,7 @@ function requestReservation(){
 
 	var parms = { assetTag:assetTag, userID:userID, checkOut:checkOut};
 	
-	console.log(parms.checkOut);
+	//console.log(parms.checkOut);
 	
 	$.ajax({
 		url: "./rest/reservations/",
@@ -46,6 +46,50 @@ function showReservationForm(assetTag){
 	    	$("#notes").val(response.notes);
 			
 
+		});
+}
+
+function modifyReservationForm(resID){
+
+		$.ajax({
+			url: "../AssetBookerAPI/rest/reservations/"+resID,
+			type: 'GET',
+			dataType : "json",
+	        contentType: "application/json",
+		}).fail(function(response) {
+			console.log(JSON.stringify(response));
+	
+	    }).done(function(response){
+	    	
+	    	$("#reservationID").val(resID);
+	    	$("#checkOut").val(response.checkOut);
+	    	$("#status").val(response.status);
+	    	$("#assetTag").val(response.assetTag);
+			
+		});
+}
+
+function submitModifyReservationForm(){
+	var reservationID = $("#reservationID").val();
+	var status = $("#status").val();
+	var checkOut = $("#checkOut").val();
+	var assetTag = $("#assetTag").val();
+	var parms = { reservationID:reservationID, assetTag:assetTag, status:status, checkOut:checkOut};
+	
+	//console.log(parms.checkOut);
+	
+	$.ajax({
+		url: "../AssetBookerAPI/rest/reservations/"+reservationID,
+		type: 'PUT',
+		dataType : "json",
+        contentType: "application/json",
+		data: JSON.stringify(parms)
+	}).fail(function(response) {
+		console.log(JSON.stringify(response));
+		alert("Sorry, something went wrong with your request. Refresh the page and try again or contact an admin for assistance. ");
+    }).done(function(response){
+		alert(response.message);
+		window.location.href = './index.jsp?view=assets';	
 		});
 }
 

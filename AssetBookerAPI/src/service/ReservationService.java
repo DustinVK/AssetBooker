@@ -107,19 +107,37 @@ public class ReservationService{
 			
 			message = res.add();
 			result.put("message", message);
-			//Date date = Date.valueOf(inDateTime);
+
 			
-//			Article article = new Article();
-//			article.setArticleTitle(articleTitle);
-//			article.setArticleContent(articleContent);
-//			article.setArticleAuthorID(articleAuthorID);
-//			article.setArticleVisible(1);
-//			article.setCategoryID(categoryID);
-//			article.setArticleImage(articleImage);
-//			
-//			message = article.addArticle();
-//		
-//			result.put("message", message);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public static JSONObject update(JSONObject inputParms) {
+		
+		String message = "";
+		
+		JSONObject result = new JSONObject();
+		
+		try {
+			int reservationID = inputParms.getInt("reservationID");
+			int assetTag = inputParms.getInt("assetTag");
+			int status = inputParms.getInt("status");
+			String checkOutDateTime = inputParms.getString("checkOut");
+			
+			Reservation res = new Reservation();
+			res.setAssetTag(assetTag);
+			res.setReservationID(reservationID);
+			res.setStatus(status);
+			res.setCheckOutDateTime(checkOutDateTime);
+			
+			message = res.update();
+			result.put("message", message);
+
 			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

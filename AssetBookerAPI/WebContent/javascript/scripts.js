@@ -34,7 +34,10 @@ $(document).ready(function(){
 		if(!!resID){
 			console.log("resID");
 		} 
-	} 
+	} else if(view=='reservation'){
+		resID  = getQueryStringVariable('id');
+		modifyReservationForm(resID);
+	}
 
 });
 

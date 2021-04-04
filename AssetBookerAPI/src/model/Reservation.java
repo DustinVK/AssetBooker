@@ -118,11 +118,12 @@ public class Reservation implements DataObject {
 				Connection connection = mssqlConnection.getConnection();
 				
 				String update = "UPDATE " + mssqlConnection.getDatabase()+".dbo.reservations SET " +
-						"status=IsNull(?,status) WHERE reservationID="+reservationID+"";
+						"status=IsNull(?,status), assetTag=IsNull(?,assetTag) WHERE reservationID="+reservationID+"";
 				
 				PreparedStatement ps = connection.prepareStatement(update);
 				
 				ps.setInt(1, status);
+				ps.setInt(2, assetTag);
 				ps.executeUpdate();
 				
 				
