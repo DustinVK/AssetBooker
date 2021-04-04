@@ -5,13 +5,13 @@
 <div class="form-group col-xs-12 col-md-6">
 <label>Select a date to view availability</label>
     <div id ="datePicker">
-    
     </div>
+    <div>  </div>
 </div>
 
 <div class="form-group col-xs-12 col-md-6">
     <label for="outDate">Checkout Date</label>
-    <input type="Date" class="form-control" id="outDate" required autofocus >
+    <input type="Date" class="form-control" id="outDate" readOnly >
    
 </div>
 

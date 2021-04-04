@@ -41,6 +41,29 @@ public class ReservationService{
 		return reservationObj;
 	}
 	
+	public static JSONObject delete(int id) {
+		
+		String message = "";
+		
+		JSONObject result = new JSONObject();
+		
+		Reservation res = new Reservation();
+		res.setReservationID(id);
+	
+		message = res.delete();
+		System.out.print(message);
+		
+		
+		try {
+			result.put("message", message);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public static JSONArray getByStatus(int status) {
 		
 		JSONArray reservationObj = new JSONArray();
@@ -51,8 +74,19 @@ public class ReservationService{
 		
 		return reservationObj;
 	}
+	
+	public static JSONArray getByUser(int user) {
+		
+		JSONArray reservationObj = new JSONArray();
+		
+		Reservation res = new Reservation();
+		res.setUserID(user);
+		reservationObj = res.getByUser();
+		
+		return reservationObj;
+	}
 
-public static JSONObject add(JSONObject inputParms) {
+	public static JSONObject add(JSONObject inputParms) {
 		
 		String message = "";
 		

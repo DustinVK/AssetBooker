@@ -21,12 +21,16 @@
 	}
 
 	if(view.equals("assets")){%>
-		<%@include file=".\includes\assetlist.jsp"%>
-	<%}else if(view.equals("reserve")){ %>
-		<%@include file=".\includes\reserve.jsp" %>
-	<%}else{%>
-	<%@include file=".\includes\dashboard.jsp" %>
-		<%}%>
+			<%@include file=".\includes\assetlist.jsp"%>
+		<%}else if(view.equals("reserve")){ %>
+			<%@include file=".\includes\reservationForm.jsp" %>
+		<%}else if(view.equals("reservations")){ %>
+			<%@include file=".\includes\reservations.jsp" %>
+		<%}else if(view.equals("reservation")){ %>
+			<%@include file=".\includes\reservationEdit.jsp" %>
+		<%}else{%>
+			<%@include file=".\includes\dashboard.jsp" %>
+	<%}%>
 		
     </div>
     <!-- /#page-content-wrapper -->

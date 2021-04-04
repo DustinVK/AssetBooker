@@ -1,6 +1,7 @@
 package rest;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -38,12 +39,21 @@ public class ReservationsAPI {
 	}
 	
 	@GET
-	@Path("/{tag}/") 
+	@Path("/{id}/") 
 	@Produces("application/json")
 	@Consumes("application/json")
-	public String get(@PathParam("tag") Integer tag) {
-		JSONObject reservation = ReservationService.get(tag);
+	public String get(@PathParam("id") Integer id) {
+		JSONObject reservation = ReservationService.get(id);
 		
+		return reservation.toString();
+	}
+	
+	@DELETE
+	@Path("/{id}/") 
+	@Produces("application/json")
+	@Consumes("application/json")
+	public String delete(@PathParam("id") Integer id) {
+		JSONObject reservation = ReservationService.delete(id);
 		return reservation.toString();
 	}
 	
@@ -51,8 +61,18 @@ public class ReservationsAPI {
 	@Path("/status/{id}/") 
 	@Produces("application/json")
 	@Consumes("application/json")
-	public String getByStatus(@PathParam("status") Integer status) {
-		JSONArray reservations = ReservationService.getByStatus(status);
+	public String getByStatus(@PathParam("id") Integer id) {
+		JSONArray reservations = ReservationService.getByStatus(id);
+		
+		return reservations.toString();
+	}
+	
+	@GET
+	@Path("/user/{id}/") 
+	@Produces("application/json")
+	@Consumes("application/json")
+	public String getByUser(@PathParam("id") Integer id) {
+		JSONArray reservations = ReservationService.getByUser(id);
 		
 		return reservations.toString();
 	}

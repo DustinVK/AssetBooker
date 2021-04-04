@@ -50,6 +50,25 @@ public class Reservation implements DataObject {
 		return sqlQuery.lstQuery();
 	}
 	
+	public JSONArray getByUser() {
+		MSSQLConnection mssqlConnection = new MSSQLConnection();
+		
+		String sqlString = "SELECT * " +
+		"FROM " + mssqlConnection.getDatabase()+".dbo.reservations AS r WITH (NOLOCK) " +
+		"LEFT JOIN " + mssqlConnection.getDatabase()+ ".dbo.Assets AS a WITH (NOLOCK) " +
+		"ON r.assetTag = a.assetTag "+
+		"LEFT JOIN " + mssqlConnection.getDatabase()+ ".dbo.ReservationStatus AS rs WITH (NOLOCK) " +
+		"ON r.status = rs.status "+
+		"WHERE userID ="+userID+"" +
+		"ORDER BY reservationID DESC";			
+		
+		SQLQuery sqlQuery = new SQLQuery(); 
+		sqlQuery.setSqlString(sqlString);
+		
+		return sqlQuery.lstQuery();
+	}
+	
+	
 	public JSONArray getActive() {
 		MSSQLConnection mssqlConnection = new MSSQLConnection();
 		
@@ -132,7 +151,7 @@ public class Reservation implements DataObject {
 		return sqlQuery.getQuery();
 	}
 	
-	public String add() {
+public String add() {
 		
 	String message = "Reservation Added!";
 	
@@ -166,8 +185,38 @@ public class Reservation implements DataObject {
 		
 	}
 	
+//	public String delete() {
+//		MSSQLConnection mssqlConnection = new MSSQLConnection();
+//		Connection connection = mssqlConnection.getConnection();
+//
+//		
+//	
+//		
+//		SQLQuery sqlQuery = new SQLQuery(); 
+//		sqlQuery.setSqlString(sqlString);
+//		
+//		return sqlQuery.getQuery().toString();
+//	}
+	
 	public String delete() {
-		return null;
+		String message = "Reservation Deleted!";
+		
+		try {
+			MSSQLConnection mssqlConnection = new MSSQLConnection();
+			Connection connection = mssqlConnection.getConnection();
+			String sqlString = "DELETE FROM " +mssqlConnection.getDatabase()+".dbo.reservations " +
+					"WHERE reservationID = " + reservationID + "";
+			PreparedStatement ps = connection.prepareStatement(sqlString);
+			ps.executeUpdate();
+
+			
+		} catch (Exception e) {
+		    System.out.println(e.getMessage());
+
+		}
+
+		
+		return message;
 	}
 	
 	

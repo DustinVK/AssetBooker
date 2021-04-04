@@ -1,8 +1,4 @@
 $(document).ready(function(){
-
-
-
-	
 	view = getQueryStringVariable('view');
 	
 	if(view == null){
@@ -10,19 +6,19 @@ $(document).ready(function(){
 	}
 	
 	if(view == 'assets') {
-		
 		listAssets();
 		
 	} else if(view == 'reserve') {
 		tag = getQueryStringVariable('tag');
 		
 	    $('#datePicker').datepicker({
+	    	format: "yyyy-mm-dd",
+	    	maxViewMode: 1,
 	        startDate: "yesterday",
 	        daysOfWeekDisabled: "0,6",
 	        daysOfWeekHighlighted: "1,2,3,4,5",
 	        todayHighlight: true,
 	        //datesDisabled: ['04/06/2021', '04/21/2021'],
-	        defaultViewDate: { year: 1977, month: 04, day: 25 }
    		 });
    		 
    		 $('#datePicker').datepicker().on('changeDate', function (ev) {
@@ -32,6 +28,12 @@ $(document).ready(function(){
 
 		showReservationForm(tag);
 		
+	} else if(view=='reservations'){
+		listReservations();
+		resID  = getQueryStringVariable('delete');
+		if(!!resID){
+			console.log("resID");
+		} 
 	} 
 
 });
@@ -45,8 +47,6 @@ var getQueryStringVariable = function ( field, url ) {
 	
 
 function listAssets(){
-
-	console.log("list assets");
 	
 	$.ajax({
 		url: "../AssetBookerAPI/rest/assets/",
@@ -72,71 +72,15 @@ function listAssets(){
        		if($("#postBody").text()){
 				document.getElementById('postBody').innerHTML += lstResults;
 			}
+			
+			if($("#postFooter").text()){
+				document.getElementById('postFooter').innerHTML += lstResults;
+			}
     		
     	});
 	});
 }
 
 
-function requestReservation(){
 
-	var assetTag = $("#assetTag").val();
-	var userID = 1;
-	var outDate = $("#outDate").val();
-	var outTime = $("#outTime").val();
-	var checkOut = outDate + " " + outTime;
-
-	console.log("testii");
-	
-	var parms = { assetTag:assetTag, userID:userID, checkOut:checkOut};
-	
-	console.log(parms.checkOut);
-	
-	$.ajax({
-		url: "./rest/reservations/",
-		type: 'POST',
-		dataType : "json",
-        contentType: "application/json",
-		data: JSON.stringify(parms)
-	}).fail(function(response) {
-		console.log(JSON.stringify(response));
-
-    }).done(function(response){
-		alert(response.message);
-	});
-}
-
-
-function showReservationForm(assetTag){
-
-		//document.getElementById('outDate');
-		
-
-		
-		$.ajax({
-			url: "../AssetBookerAPI/rest/assets/"+assetTag,
-			type: 'GET',
-			dataType : "json",
-	        contentType: "application/json",
-		}).fail(function(response) {
-			console.log(JSON.stringify(response));
-	
-	    }).done(function(response){
-	    	
-	    	$("#assetTag").val(assetTag);
-	    	$("#description").val(response.description);
-	    	$("#type").val(response.assetTypeName);
-	    	$("#notes").val(response.notes);
-			
-			//var calendarLink = "<a class='calendar-link' href='./index.jsp?view=calendar&tag=" + assetTag + "'>Availability Calendar</a>";
-
-       		
-			//document.getElementById('calendarBox').innerHTML += calendarLink;
-			
-			
-			
-			
-
-		});
-	}
 	

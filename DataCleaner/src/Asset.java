@@ -1,4 +1,4 @@
-package model;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,18 +8,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Asset implements DataObject {
-	int assetTag, status, assetType;
+	int assetTag, status;
 	String manufacturer, model, description, serialNumber;
 	Date purchaseDate;
 	
-	public int getAssetType() {
-		return assetType;
-	}
-
-	public void setAssetType(int assetType) {
-		this.assetType = assetType;
-	}
-
 	public Asset() {}
 	
 	public JSONArray getActive() {
@@ -31,9 +23,7 @@ public class Asset implements DataObject {
 		"ON a.assetStatus = s.assetStatus "+
 		"LEFT JOIN " + mssqlConnection.getDatabase()+ ".dbo.AssetTypes AS t WITH (NOLOCK) " +
 		"ON a.assetType = t.assetType "+
-		"WHERE assetTag > 0 " +
-		"ORDER BY a.assetTag " +
-		"OFFSET 0 ROWS FETCH NEXT 100 ROWS ONLY";
+		"ORDER BY a.assetTag ";			
 		
 		SQLQuery sqlQuery = new SQLQuery(); 
 		sqlQuery.setSqlString(sqlString);
@@ -117,16 +107,18 @@ public class Asset implements DataObject {
 			Connection connection = mssqlConnection.getConnection();
 			
 			String addAsset = "INSERT " + mssqlConnection.getDatabase()+".dbo.assets " +
-					"(assetTag, assetStatus, description, assetType, location) VALUES (?,?,?,?,?)";
+					"(assetTag, status, manufacturer, model, description, serialNumber, purchaseDate) VALUES (?,?,?,?,?,?,?)";
 			
 			PreparedStatement ps = connection.prepareStatement(addAsset);
 			
 			
 			ps.setInt(1, assetTag);
 			ps.setInt(2, status);
-			ps.setString(3, description);
-			ps.setInt(4, assetType);
-			ps.setInt(5, 1);
+			ps.setString(3, manufacturer);
+			ps.setString(4, model);
+			ps.setString(5, description);
+			ps.setString(6, serialNumber);
+			ps.setDate(7, purchaseDate);
 			
 			ps.executeUpdate();
 			

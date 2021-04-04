@@ -63,4 +63,6 @@
 			</th>
 		</tr>
 	</thead>
+	<thead id="postFooter">
+	</thead>
 </table>
