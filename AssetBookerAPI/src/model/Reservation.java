@@ -53,18 +53,17 @@ public class Reservation implements DataObject {
 	public JSONArray getByUser() {
 		MSSQLConnection mssqlConnection = new MSSQLConnection();
 		
-		String sqlString = "SELECT * " +
+		String sqlString = "SELECT DISTINCT a.description, rs.name, r.checkOut, r.reservationID " +
 		"FROM " + mssqlConnection.getDatabase()+".dbo.reservations AS r WITH (NOLOCK) " +
-		"LEFT JOIN " + mssqlConnection.getDatabase()+ ".dbo.Assets AS a WITH (NOLOCK) " +
-		"ON r.assetTag = a.assetTag "+
 		"LEFT JOIN " + mssqlConnection.getDatabase()+ ".dbo.ReservationStatus AS rs WITH (NOLOCK) " +
 		"ON r.status = rs.status "+
-		"WHERE userID ="+userID+"" +
-		"ORDER BY reservationID DESC";			
+		"LEFT JOIN " + mssqlConnection.getDatabase()+ ".dbo.Assets AS a WITH (NOLOCK) " +
+		"ON r.assetTag = a.assetTag "+
+		"WHERE r.userID ="+userID+" " +
+		"ORDER BY checkOut";		
 		
 		SQLQuery sqlQuery = new SQLQuery(); 
 		sqlQuery.setSqlString(sqlString);
-		
 		return sqlQuery.lstQuery();
 	}
 	

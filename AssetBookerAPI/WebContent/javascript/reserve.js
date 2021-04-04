@@ -89,7 +89,7 @@ function submitModifyReservationForm(){
 		alert("Sorry, something went wrong with your request. Refresh the page and try again or contact an admin for assistance. ");
     }).done(function(response){
 		alert(response.message);
-		window.location.href = './index.jsp?view=assets';	
+		window.location.href = './index.jsp?view=reservations';	
 		});
 }
 
@@ -129,6 +129,8 @@ function listReservations(){
 				value.articleContent = value.articleContent.substring(0,200) + "...";
 			}
     	*/	
+    	
+    		var lstResults = "";
     		var lstResults = "<tr>" +
 	            "<td>"+value.description+"</td><td>"+value.name+"</td><td>"+value.checkOut+"</td>"+
 	            "<td><a href='./index.jsp?view=reservation&id=" + value.reservationID + "'><i class='fas fa-edit'></i></a></td>" +

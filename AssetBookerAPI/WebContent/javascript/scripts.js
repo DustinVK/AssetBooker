@@ -30,10 +30,6 @@ $(document).ready(function(){
 		
 	} else if(view=='reservations'){
 		listReservations();
-		resID  = getQueryStringVariable('delete');
-		if(!!resID){
-			console.log("resID");
-		} 
 	} else if(view=='reservation'){
 		resID  = getQueryStringVariable('id');
 		modifyReservationForm(resID);
