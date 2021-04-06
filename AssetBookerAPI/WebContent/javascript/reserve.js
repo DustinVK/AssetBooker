@@ -93,11 +93,11 @@ function submitModifyReservationForm(){
 		});
 }
 
-function deleteReservation(resID){
-	  if (confirm("Are you sure you want to delete this?")) {
+function cancelReservation(resID){
+	  if (confirm("Are you sure you want to cancel this reservation?")) {
 			$.ajax({
-			url: "../AssetBookerAPI/rest/reservations/"+resID,
-			type: 'DELETE',
+			url: "../AssetBookerAPI/rest/reservations/cancel/"+resID,
+			type: 'PUT',
 			dataType : "json",
 	        contentType: "application/json",
 		
@@ -132,10 +132,17 @@ function listReservations(){
     	
     		var lstResults = "";
     		var lstResults = "<tr>" +
-	            "<td>"+value.description+"</td><td>"+value.name+"</td><td>"+value.checkOut+"</td>"+
-	            "<td><a href='./index.jsp?view=reservation&id=" + value.reservationID + "'><i class='fas fa-edit'></i></a></td>" +
-	            "<td><button class = 'btn btn-link' type='button' onclick='deleteReservation("+ value.reservationID+")' data-toggle='tooltip' title='Delete'><i class='fas fa-trash'></i></button></td>" +
+	            "<td>"+value.description+"</td><td>"+value.name+"</td><td>"+value.checkOut+"</td>";
+	        if(value.name == "Booked"){
+	        	lstResults += "<td><button class = 'btn btn-link' type='button' onclick='cancelReservation("+ value.reservationID+")' data-toggle='tooltip' title='Cancel Reservation'><i class='far fa-window-close'></i></button></td>" +
 	            "</tr>";
+	        } else {
+	        	lstResults += "</tr>";
+	        }
+	        
+	        console.log(value.name);
+
+	            
 
        		if($("#postBody").text()){
 				document.getElementById('postBody').innerHTML += lstResults;

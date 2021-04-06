@@ -16,10 +16,7 @@
 				Checkout Date & Time
 			</th>
 			<th>
-				Edit
-			</th>
-			<th>
-				Delete
+				Cancel
 			</th>
 		</tr>
 	</thead>

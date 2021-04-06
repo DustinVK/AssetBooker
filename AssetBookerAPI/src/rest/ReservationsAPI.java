@@ -49,12 +49,12 @@ public class ReservationsAPI {
 		return reservation.toString();
 	}
 	
-	@DELETE
-	@Path("/{id}/") 
+	@PUT
+	@Path("/cancel/{id}/") 
 	@Produces("application/json")
 	@Consumes("application/json")
-	public String delete(@PathParam("id") Integer id) {
-		JSONObject reservation = ReservationService.delete(id);
+	public String cancel(@PathParam("id") Integer id) {
+		JSONObject reservation = ReservationService.cancel(id);
 		return reservation.toString();
 	}
 	

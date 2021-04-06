@@ -60,7 +60,7 @@ public class Reservation implements DataObject {
 		"LEFT JOIN " + mssqlConnection.getDatabase()+ ".dbo.Assets AS a WITH (NOLOCK) " +
 		"ON r.assetTag = a.assetTag "+
 		"WHERE r.userID ="+userID+" " +
-		"ORDER BY checkOut";		
+		"ORDER BY checkOut DESC";		
 		
 		SQLQuery sqlQuery = new SQLQuery(); 
 		sqlQuery.setSqlString(sqlString);
@@ -137,6 +137,34 @@ public class Reservation implements DataObject {
 			return message;
 	
 		}
+	
+	public String cancel() {
+		
+		String message = "Reservation Cancelled!";
+		
+		try {
+			MSSQLConnection mssqlConnection = new MSSQLConnection();
+			Connection connection = mssqlConnection.getConnection();
+			
+			String update = "UPDATE " + mssqlConnection.getDatabase()+".dbo.reservations SET " +
+					"status=3 WHERE reservationID="+reservationID+"";
+			
+			PreparedStatement ps = connection.prepareStatement(update);
+			
+			ps.executeUpdate();
+			
+			
+	    	try { if (ps!= null) ps.close(); } catch (Exception e) {};
+	    	try { if (connection != null) connection.close(); } catch (Exception e) {}; 
+			
+		} catch (Exception e) {
+		    System.out.println(e.getMessage());
+
+		}
+		
+		return message;
+
+	}
 	
 	public JSONObject get() {
 		MSSQLConnection mssqlConnection = new MSSQLConnection();

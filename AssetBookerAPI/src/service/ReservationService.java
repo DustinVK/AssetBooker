@@ -41,7 +41,7 @@ public class ReservationService{
 		return reservationObj;
 	}
 	
-	public static JSONObject delete(int id) {
+	public static JSONObject cancel(int id) {
 		
 		String message = "";
 		
@@ -50,7 +50,7 @@ public class ReservationService{
 		Reservation res = new Reservation();
 		res.setReservationID(id);
 	
-		message = res.delete();
+		message = res.cancel();
 		System.out.print(message);
 		
 		
