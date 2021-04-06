@@ -2,9 +2,7 @@
 
 AssetBooker is a RESTful web service that combines asset-tracking capabilites with functionality for reserving and checking out assets. 
 
-The back-end is built with Java EE, JAX-RS and (currently) a MSSQL Server database connection, while the front end is bult with HTML, CSS, and Javascript. 
-
-This project is currently being designed for use by the Television and Digital Media Production department of my school, but it is flexible and capable of being adapted to different uses. 
+The client uses a bootstrap template with custom HTML, CSS and JavaScript. The back-end is built with Java, using the JAX-RS specification to expose HTTP methods, a service layer to handle business logic, and a model layer to interface with the database. 
 
 # Screenshots
 
