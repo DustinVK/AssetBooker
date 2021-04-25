@@ -25,6 +25,16 @@ public class AssetsAPI {
 	}
 	
 	@GET
+	@Path("type/{type}/")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public String getByType(@PathParam("type") Integer type) {
+		JSONArray assets = AssetService.getType(type);
+		
+		return assets.toString();
+	}
+	
+	@GET
 	@Path("/{tag}/") 
 	@Produces("application/json")
 	@Consumes("application/json")

@@ -54,6 +54,29 @@ public class Asset implements DataObject {
 		return sqlQuery.lstQuery();
 	}
 	
+	public JSONArray getType() {
+		MSSQLConnection mssqlConnection = new MSSQLConnection();
+	
+//		String sqlString = "SELECT * " +
+//		"FROM " + mssqlConnection.getDatabase()+".dbo.assets WITH (NOLOCK) " +
+//		"WHERE assetType =" +assetType+" "+
+//		"ORDER BY assetTag";	
+//		
+		String sqlString = "SELECT * " +
+		"FROM " + mssqlConnection.getDatabase()+".dbo.assets As a WITH (NOLOCK) " +
+		"LEFT JOIN " + mssqlConnection.getDatabase()+ ".dbo.AssetStatus AS s WITH (NOLOCK) " +
+		"ON a.assetStatus = s.assetStatus "+
+		"LEFT JOIN " + mssqlConnection.getDatabase()+ ".dbo.AssetTypes AS t WITH (NOLOCK) " +
+		"ON a.assetType = t.assetType "+
+		"WHERE a.assetType= "+assetType+""; 
+
+		
+		SQLQuery sqlQuery = new SQLQuery(); 
+		sqlQuery.setSqlString(sqlString);
+		
+		return sqlQuery.lstQuery();
+	}
+	
 	public JSONObject get() {
 
 		MSSQLConnection mssqlConnection = new MSSQLConnection();

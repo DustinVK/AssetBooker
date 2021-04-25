@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import model.Asset;
+import model.MSSQLConnection;
+import model.SQLQuery;
 import model.User;
 
 public class AssetService {
@@ -26,6 +28,16 @@ public class AssetService {
 		
 		return assets;
 		
+	}
+	
+	public static JSONArray getType(int type) {
+		JSONArray assets = new JSONArray();
+		
+		Asset asset = new Asset();
+		asset.setAssetType(type);
+		assets = asset.getType();
+		
+		return assets;
 	}
 	
 	public static JSONObject get(int tag) {
